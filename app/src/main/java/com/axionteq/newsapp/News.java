@@ -5,33 +5,25 @@ import com.google.gson.annotations.SerializedName;
 
 public class News {
 
-    @SerializedName( "image" )
+    @SerializedName( "urlToImage" )
     @Expose
     private String imageurl;
 
-    @SerializedName( "header" )
+    @SerializedName( "title" )
     @Expose
     private String title;
 
-    @SerializedName( "id" )
+    @SerializedName( "author" )
     @Expose
     private String author;
 
-    @SerializedName( "details" )
+    @SerializedName( "description" )
     @Expose
     private String content;
 
-    @SerializedName("date")
+    @SerializedName("publishedAt")
     @Expose
     private String publish;
-
-    public News(String author, String content, String title, String publish, String imageurl) {
-        this.author = author;
-        this.content = content;
-        this.title = title;
-        this.publish = publish;
-        this.imageurl = imageurl;
-    }
 
     public String getImageurl() {
         return imageurl;

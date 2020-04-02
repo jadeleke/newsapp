@@ -8,9 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL =
-            //"https://newsapi.org/v2/";
-            "https://wcisantamaria.000webhostapp.com";
+    private static final String BASE_URL = "https://newsapi.org/v2/";
 
     private static Retrofit getRetrofitInstance() {
         return new Retrofit.Builder()

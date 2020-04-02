@@ -9,7 +9,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Map;
 
 public class NewsVM extends ViewModel {
 
@@ -45,22 +50,7 @@ public class NewsVM extends ViewModel {
     }
 
     MutableLiveData<ArrayList<NewsVM>> getArrayListMutableLiveData() {
-/*     newsVMArrayList = new ArrayList<>();
-        News news = new News( "the author", "The quick brown jumped over the lazy dogs",
-                "the fox", "at 7:30", "image1.png" );
-        News news1 = new News( "the author", "The quick brown jumped over the lazy dogs",
-                "the fox", "at 7:30", "image1.png" );
-        News news2 = new News( "the author", "The quick brown jumped over the lazy dogs",
-                "the fox", "at 7:30", "image1.png" );
 
-        NewsVM newsVM = new NewsVM( news );
-        NewsVM newsVM1 = new NewsVM( news1 );
-        NewsVM newsVM2 = new NewsVM( news2);
-
-        newsVMArrayList.add( newsVM );
-        newsVMArrayList.add( newsVM1 );
-        newsVMArrayList.add( newsVM2 );
-        arrayListMutableLiveData.setValue( newsVMArrayList );*/
         return arrayListMutableLiveData;
     }
 }

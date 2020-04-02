@@ -3,6 +3,7 @@ package com.axionteq.newsapp;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -13,44 +14,42 @@ import io.reactivex.schedulers.Schedulers;
 public class NewsRepo {
 
     private ArrayList<NewsVM> arrayList;
-    private MutableLiveData<ArrayList<NewsVM>> arrayListMutableLiveData = new MutableLiveData<ArrayList<NewsVM>>();
+    private MutableLiveData<ArrayList<NewsVM>> arrayListMutableLiveData = new MutableLiveData<>();
 
-    NewsRepo() { }
 
     MutableLiveData<ArrayList<NewsVM>> getArrayListMutableLiveData() {
         ApiService apiService = RetrofitClient.getApiService();
 
-        Observable<ArrayList<News>> observable = apiService.getNews()
+        Observable<Articles> observable = apiService.getArticles()
                 .subscribeOn( Schedulers.newThread() )
                 .observeOn( AndroidSchedulers.mainThread() );
 
-        observable.subscribe( new Observer<ArrayList<News>>() {
+        observable.subscribe( new Observer<Articles>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(ArrayList<News> newsArrayList) {
-
-                NewsVM newsModel;
-                News news;
+            public void onNext(Articles newsArrayList) {
 
                 arrayList = new ArrayList<>();
+                List<News> listNews = newsArrayList.getNews();
+                NewsVM newsModel;
 
-                for (int i = 0; i < newsArrayList.size(); i++) {
-                    news = new News(
-                            newsArrayList.get( i ).getAuthor(),
-                            newsArrayList.get( i ).getContent(),
-                            newsArrayList.get( i ).getTitle(),
-                            newsArrayList.get( i ).getPublish(),
-                            newsArrayList.get( i ).getImageurl()
-                    );
+                for (int i = 0; i < listNews.size(); i++) {
+                    News news = new News();
+                    news.setTitle( listNews.get( i ).getTitle() );
+                    news.setImageurl( listNews.get( i ).getImageurl() );
+                    news.setPublish( listNews.get( i ).getPublish() );
+                    news.setContent( listNews.get( i ).getContent() );
+                    news.setAuthor( listNews.get( i ).getAuthor() );
+
                     newsModel = new NewsVM( news );
                     arrayList.add( newsModel );
                 }
-
                 arrayListMutableLiveData.setValue( arrayList );
+
             }
 
             @Override

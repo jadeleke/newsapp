@@ -10,14 +10,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.axionteq.newsapp.databinding.ActivityMainBinding;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-    NewsVM newsVM = new NewsVM(  );
+    NewsVM newsVM =  new NewsVM(  );
     News news;
     NewsAdapter newsAdapter;
+
+    public MainActivity() throws JSONException {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +36,10 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerView.setHasFixedSize( true );
         binding.recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
 
-        newsVM.getArrayListMutableLiveData().observe( this, new Observer<ArrayList<NewsVM>>() {
-            @Override
-            public void onChanged(ArrayList<NewsVM> newsVMS) {
+        newsVM.getArrayListMutableLiveData().observe( this, newsVMS -> {
 
-                newsAdapter = new NewsAdapter( MainActivity.this, newsVMS );
-                binding.recyclerView.setAdapter( newsAdapter );
-            }
+            newsAdapter = new NewsAdapter( MainActivity.this, newsVMS );
+            binding.recyclerView.setAdapter( newsAdapter );
         } );
     }
 }
