@@ -4,20 +4,20 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.axionteq.newsapp.adapter.NewsAdapter;
+import com.axionteq.newsapp.data.NewsViewModel;
 import com.axionteq.newsapp.databinding.ActivityMainBinding;
+import com.axionteq.newsapp.model.News;
 
 import org.json.JSONException;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-    NewsVM newsVM =  new NewsVM(  );
+    NewsViewModel newsViewModel =  new NewsViewModel(  );
     News news;
     NewsAdapter newsAdapter;
 
@@ -31,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
         binding.setMain( this );
         binding.setLifecycleOwner( this );
-        newsVM = new ViewModelProvider( this ).get( NewsVM.class );
+        newsViewModel = new ViewModelProvider( this ).get( NewsViewModel.class );
 
         binding.recyclerView.setHasFixedSize( true );
         binding.recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
 
-        newsVM.getArrayListMutableLiveData().observe( this, newsVMS -> {
+        newsViewModel.getArrayListMutableLiveData().observe( this, newsVMS -> {
 
             newsAdapter = new NewsAdapter( MainActivity.this, newsVMS );
             binding.recyclerView.setAdapter( newsAdapter );

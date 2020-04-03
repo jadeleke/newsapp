@@ -1,4 +1,4 @@
-package com.axionteq.newsapp;
+package com.axionteq.newsapp.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,16 +8,18 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.axionteq.newsapp.R;
+import com.axionteq.newsapp.data.NewsViewModel;
 import com.axionteq.newsapp.databinding.NewsAdapterBinding;
 
 import java.util.ArrayList;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
     Context context;
-    ArrayList<NewsVM> arrayList;
+    ArrayList<NewsViewModel> arrayList;
     LayoutInflater layoutInflater;
 
-    NewsAdapter(Context context, ArrayList<NewsVM> arrayList) {
+    NewsAdapter(Context context, ArrayList<NewsViewModel> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
     }
@@ -34,7 +36,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
-        NewsVM newsModel = arrayList.get( position );
+        NewsViewModel newsModel = arrayList.get( position );
         holder.bind( newsModel );
     }
 
@@ -51,7 +53,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             this.binding = binding;
         }
 
-        public void bind(NewsVM newsModel) {
+        public void bind(NewsViewModel newsModel) {
             this.binding.setAdapterMain( newsModel );
             binding.executePendingBindings();
         }

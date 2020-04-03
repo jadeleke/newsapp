@@ -1,7 +1,5 @@
-package com.axionteq.newsapp;
+package com.axionteq.newsapp.retrofit;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -18,7 +16,7 @@ public class RetrofitClient {
                 .build();
     }
 
-    static ApiService getApiService() {
-        return getRetrofitInstance().create( ApiService.class );
+    static APIService getApiService() {
+        return getRetrofitInstance().create( APIService.class );
     }
 }

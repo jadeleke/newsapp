@@ -7,7 +7,7 @@
 <!--    <data class="NewsAdapterBinding">-->
         <variable
             name="adapterMain"
-            type="com.axionteq.newsapp.NewsVM" />
+            type="com.axionteq.newsapp.data.NewsViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView

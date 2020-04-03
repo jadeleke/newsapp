@@ -1,6 +1,11 @@
-package com.axionteq.newsapp;
+package com.axionteq.newsapp.data;
 
 import androidx.lifecycle.MutableLiveData;
+
+import com.axionteq.newsapp.model.Articles;
+import com.axionteq.newsapp.model.News;
+import com.axionteq.newsapp.retrofit.APIService;
+import com.axionteq.newsapp.retrofit.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +16,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class NewsRepo {
+public class NewsRepository {
 
-    private ArrayList<NewsVM> arrayList;
-    private MutableLiveData<ArrayList<NewsVM>> arrayListMutableLiveData = new MutableLiveData<>();
+    private ArrayList<NewsViewModel> arrayList;
+    private MutableLiveData<ArrayList<NewsViewModel>> arrayListMutableLiveData = new MutableLiveData<>();
 
 
-    MutableLiveData<ArrayList<NewsVM>> getArrayListMutableLiveData() {
-        ApiService apiService = RetrofitClient.getApiService();
+    MutableLiveData<ArrayList<NewsViewModel>> getArrayListMutableLiveData() {
+        APIService apiService = RetrofitClient.getApiService();
 
         Observable<Articles> observable = apiService.getArticles()
                 .subscribeOn( Schedulers.newThread() )
@@ -35,7 +40,7 @@ public class NewsRepo {
 
                 arrayList = new ArrayList<>();
                 List<News> listNews = newsArrayList.getNews();
-                NewsVM newsModel;
+                NewsViewModel newsModel;
 
                 for (int i = 0; i < listNews.size(); i++) {
                     News news = new News();
@@ -45,7 +50,7 @@ public class NewsRepo {
                     news.setContent( listNews.get( i ).getContent() );
                     news.setAuthor( listNews.get( i ).getAuthor() );
 
-                    newsModel = new NewsVM( news );
+                    newsModel = new NewsViewModel( news );
                     arrayList.add( newsModel );
                 }
                 arrayListMutableLiveData.setValue( arrayList );

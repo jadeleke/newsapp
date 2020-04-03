@@ -1,4 +1,4 @@
-package com.axionteq.newsapp;
+package com.axionteq.newsapp.data;
 
 import android.widget.ImageView;
 
@@ -7,16 +7,12 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.axionteq.newsapp.model.News;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Map;
 
-public class NewsVM extends ViewModel {
+public class NewsViewModel extends ViewModel {
 
     public ObservableField<String> title = new ObservableField<>();
     public ObservableField<String> imageurl = new ObservableField<>();
@@ -24,8 +20,8 @@ public class NewsVM extends ViewModel {
     public ObservableField<String> publish = new ObservableField<>();
     public ObservableField<String> author = new ObservableField<>();
 
-    private MutableLiveData<ArrayList<NewsVM>> arrayListMutableLiveData = new MutableLiveData<>();
-    private ArrayList<NewsVM> newsVMArrayList;
+    private MutableLiveData<ArrayList<NewsViewModel>> arrayListMutableLiveData = new MutableLiveData<>();
+    private ArrayList<NewsViewModel> newsViewModelArrayList;
 
     public ObservableField<String> imageurl() {
         return imageurl;
@@ -36,12 +32,12 @@ public class NewsVM extends ViewModel {
         Picasso.get().load( imageUrl ).into( imageView );
     }
 
-    public NewsVM() {
+    public NewsViewModel() {
         NewsRepo newsRepo = new NewsRepo();
         arrayListMutableLiveData = newsRepo.getArrayListMutableLiveData();
     }
 
-    NewsVM(News news) {
+    NewsViewModel(News news) {
         this.imageurl.set( news.getImageurl() );
         this.author.set( news.getAuthor() );
         this.content.set( news.getContent() );
@@ -49,7 +45,7 @@ public class NewsVM extends ViewModel {
         this.title.set( news.getTitle() );
     }
 
-    MutableLiveData<ArrayList<NewsVM>> getArrayListMutableLiveData() {
+    MutableLiveData<ArrayList<NewsViewModel>> getArrayListMutableLiveData() {
 
         return arrayListMutableLiveData;
     }

@@ -1,4 +1,4 @@
-package com.axionteq.newsapp;
+package com.axionteq.newsapp.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
