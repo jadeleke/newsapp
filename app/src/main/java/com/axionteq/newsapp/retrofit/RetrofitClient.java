@@ -10,13 +10,13 @@ public class RetrofitClient {
 
     private static Retrofit getRetrofitInstance() {
         return new Retrofit.Builder()
-                .baseUrl( BASE_URL )
-                .addConverterFactory( GsonConverterFactory.create() )
-                .addCallAdapterFactory( RxJava2CallAdapterFactory.create() )
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
     static APIService getApiService() {
-        return getRetrofitInstance().create( APIService.class );
+        return getRetrofitInstance().create(APIService.class);
     }
 }
