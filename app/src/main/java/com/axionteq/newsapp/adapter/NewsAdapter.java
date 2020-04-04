@@ -2,18 +2,19 @@ package com.axionteq.newsapp.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.axionteq.newsapp.R;
-import com.axionteq.newsapp.data.NewsViewModel;
-import com.axionteq.newsapp.databinding.NewsAdapterBinding;
 import com.axionteq.newsapp.model.News;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
@@ -26,17 +27,21 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @NonNull
     @Override
-    public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        NewsAdapterBinding binding = DataBindingUtil.inflate(inflater, R.layout.recyclerview,
-                viewGroup, false);
-        return new NewsViewHolder(binding);
+    public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.recyclerview, parent, false);
+        return new NewsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         News news = newsList.get(position);
-        holder.bind(news);
+
+        holder.author.setText(news.getAuthor());
+        holder.title.setText(news.getTitle());
+        holder.desc.setText(news.getDescription());
+        holder.date.setText(news.getPublished());
+        Picasso.get().load(news.getImageUrl()).into(holder.imageView);
     }
 
     @Override
@@ -48,21 +53,23 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         newsList = news;
     }
 
-    public static class NewsViewHolder extends RecyclerView.ViewHolder {
-        NewsAdapterBinding binding;
+    class NewsViewHolder extends RecyclerView.ViewHolder {
 
-        NewsViewHolder(NewsAdapterBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
-        }
+        ImageView imageView;
+        TextView desc, title, date, author;
 
-        void bind(News news) {
-            this.binding.setAdapterMain(news);
-            binding.executePendingBindings();
-        }
+        NewsViewHolder(View view) {
+            super(view);
 
-        public NewsAdapterBinding getBinding() {
-            return binding;
+            imageView = view.findViewById(R.id.news_iv);
+            desc = view.findViewById(R.id.tv_description);
+            title = view.findViewById(R.id.tv_title);
+            date = view.findViewById(R.id.tv_published);
+            author = view.findViewById(R.id.tv_author);
+
+            view.setOnClickListener(v -> {
+                Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show();
+            });
         }
     }
 }
