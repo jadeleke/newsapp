@@ -14,11 +14,9 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 
-public class NewsRepository {
+class NewsRepository {
 
     private static NewsRepository instance;
     private APIService apiService;
@@ -30,14 +28,14 @@ public class NewsRepository {
     }
 
     // Singleton
-    public static NewsRepository getInstance() {
+    static NewsRepository getInstance() {
         if (instance == null)
             instance = new NewsRepository();
 
         return instance;
     }
 
-    public LiveData<List<News>> getArticles() {
+    LiveData<List<News>> getArticles() {
         final MutableLiveData<List<News>> newsLiveDataList = new MutableLiveData<>();
 
         disposable.add(apiService.getArticles("bitcoin")
