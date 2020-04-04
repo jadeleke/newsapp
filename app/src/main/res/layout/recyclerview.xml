@@ -4,10 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class="NewsAdapterBinding">
-<!--    <data class="NewsAdapterBinding">-->
         <variable
             name="adapterMain"
-            type="com.axionteq.newsapp.data.NewsViewModel" />
+            type="com.axionteq.newsapp.model.News" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -24,7 +23,7 @@
                 android:id="@+id/img_rv"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                app:imageUrl="@{adapterMain.imageurl}" />
+                app:imageUrl="@{adapterMain.imageUrl}" />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -41,18 +40,18 @@
                 tools:text="@{adapterMain.author}" />
 
             <TextView
-                android:id="@+id/tv_content"
+                android:id="@+id/tv_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                tools:text="@{adapterMain.content}" />
+                tools:text="@{adapterMain.description}" />
 
             <TextView
-                android:id="@+id/tv_published_at"
+                android:id="@+id/tv_published"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                tools:text="@{adapterMain.publish}" />
+                tools:text="@{adapterMain.published}" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

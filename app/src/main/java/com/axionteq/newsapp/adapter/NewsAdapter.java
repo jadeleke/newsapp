@@ -11,50 +11,53 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.axionteq.newsapp.R;
 import com.axionteq.newsapp.data.NewsViewModel;
 import com.axionteq.newsapp.databinding.NewsAdapterBinding;
+import com.axionteq.newsapp.model.News;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
-    Context context;
-    ArrayList<NewsViewModel> arrayList;
-    LayoutInflater layoutInflater;
+    private Context context;
+    private List<News> newsList;
 
-    NewsAdapter(Context context, ArrayList<NewsViewModel> arrayList) {
+    public NewsAdapter(Context context) {
         this.context = context;
-        this.arrayList = arrayList;
     }
 
     @NonNull
     @Override
     public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        if (layoutInflater == null) {
-            layoutInflater = LayoutInflater.from( viewGroup.getContext() );
-        }
-        NewsAdapterBinding binding = DataBindingUtil.inflate( layoutInflater, R.layout.recyclerview, viewGroup, false );
-        return new NewsViewHolder( binding );
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        NewsAdapterBinding binding = DataBindingUtil.inflate(inflater, R.layout.recyclerview,
+                viewGroup, false);
+        return new NewsViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
-        NewsViewModel newsModel = arrayList.get( position );
-        holder.bind( newsModel );
+        News news = newsList.get(position);
+        holder.bind(news);
     }
 
     @Override
     public int getItemCount() {
-        return arrayList.size();
+        return newsList.size();
     }
 
-    public class NewsViewHolder extends RecyclerView.ViewHolder {
+    public void setNews(List<News> news) {
+        newsList = news;
+    }
+
+    public static class NewsViewHolder extends RecyclerView.ViewHolder {
         NewsAdapterBinding binding;
 
-        public NewsViewHolder(NewsAdapterBinding binding) {
-            super( binding.getRoot() );
+        NewsViewHolder(NewsAdapterBinding binding) {
+            super(binding.getRoot());
             this.binding = binding;
         }
 
-        public void bind(NewsViewModel newsModel) {
-            this.binding.setAdapterMain( newsModel );
+        void bind(News news) {
+            this.binding.setAdapterMain(news);
             binding.executePendingBindings();
         }
 

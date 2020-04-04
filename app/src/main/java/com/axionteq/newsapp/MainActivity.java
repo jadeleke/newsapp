@@ -17,29 +17,26 @@ import org.json.JSONException;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-    NewsViewModel newsViewModel =  new NewsViewModel(  );
-    News news;
+    NewsViewModel newsViewModel;
     NewsAdapter newsAdapter;
-
-    public MainActivity() throws JSONException {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        binding = DataBindingUtil.setContentView( this, R.layout.activity_main );
+        super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        binding.setMain( this );
-        binding.setLifecycleOwner( this );
-        newsViewModel = new ViewModelProvider( this ).get( NewsViewModel.class );
+        binding.setMain(this);
+        binding.setLifecycleOwner(this);
 
-        binding.recyclerView.setHasFixedSize( true );
-        binding.recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
+        binding.recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        newsViewModel.getArrayListMutableLiveData().observe( this, newsVMS -> {
+        newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
+        newsAdapter = new NewsAdapter(getApplicationContext());
 
-            newsAdapter = new NewsAdapter( MainActivity.this, newsVMS );
-            binding.recyclerView.setAdapter( newsAdapter );
-        } );
+        newsViewModel.getNewsList().observe(this, (newsList) -> {
+            newsAdapter.setNews(newsList);
+            binding.recyclerView.setAdapter(newsAdapter);
+        });
     }
 }
