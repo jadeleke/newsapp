@@ -47,28 +47,25 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.1.0'
 
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.8.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
-    implementation 'com.squareup.retrofit2:converter-scalars:2.8.1'
+    // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.8.1'
+
+    //RxJava & RxAndroid
+    implementation "io.reactivex.rxjava2:rxjava:2.2.18"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    // Okhttp & http Logging
+    implementation 'com.squareup.okhttp3:okhttp:4.4.0'
+    implementation "com.squareup.okhttp3:logging-interceptor:4.4.0"
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.18'
-
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
-    implementation 'android.arch.lifecycle:livedata:1.1.1'
-    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
-    implementation 'android.arch.lifecycle:viewmodel:1.1.1'
-
+    // Lifecycle Components
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-runtime:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0'
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
     implementation 'androidx.lifecycle:lifecycle-livedata-core:2.2.0'
-
-    implementation 'com.squareup.okhttp3:okhttp:4.1.0'
-    implementation "com.squareup.okhttp3:logging-interceptor:4.4.0"
 }

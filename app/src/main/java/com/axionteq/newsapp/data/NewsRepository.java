@@ -1,73 +1,62 @@
 package com.axionteq.newsapp.data;
 
+import android.util.Log;
+
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.axionteq.newsapp.model.Articles;
+import com.axionteq.newsapp.model.ArticlesResponse;
 import com.axionteq.newsapp.model.News;
 import com.axionteq.newsapp.retrofit.APIService;
 import com.axionteq.newsapp.retrofit.RetrofitClient;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 public class NewsRepository {
 
-    private ArrayList<NewsViewModel> arrayList;
-    private MutableLiveData<ArrayList<NewsViewModel>> arrayListMutableLiveData = new MutableLiveData<>();
+    private static NewsRepository instance;
+    private APIService apiService;
+    private CompositeDisposable disposable;
 
+    private NewsRepository() {
+        apiService = RetrofitClient.getApiService();
+        disposable = new CompositeDisposable();
+    }
 
-    MutableLiveData<ArrayList<NewsViewModel>> getArrayListMutableLiveData() {
-        APIService apiService = RetrofitClient.getApiService();
+    // Singleton
+    public static NewsRepository getInstance() {
+        if (instance == null)
+            instance = new NewsRepository();
 
-        Observable<Articles> observable = apiService.getArticles()
-                .subscribeOn( Schedulers.newThread() )
-                .observeOn( AndroidSchedulers.mainThread() );
+        return instance;
+    }
 
-        observable.subscribe( new Observer<Articles>() {
-            @Override
-            public void onSubscribe(Disposable d) {
+    public LiveData<List<News>> getArticles() {
+        final MutableLiveData<List<News>> newsLiveDataList = new MutableLiveData<>();
 
-            }
+        disposable.add(apiService.getArticles("bitcoin")
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(articlesResponse -> {
+                    if (articlesResponse.body() != null && articlesResponse.isSuccessful()) {
 
-            @Override
-            public void onNext(Articles newsArrayList) {
+                        ArticlesResponse response = articlesResponse.body();
+                        if (response.getStatus().equals("ok"))
+                            newsLiveDataList.setValue(response.getNews());
+                        else
+                            Log.i("Err", "Unable to contact API");
+                    } else
+                        Log.i("Err", articlesResponse.message());
+                }, throwable -> Log.i("throwable", throwable.getLocalizedMessage()))
+        );
 
-                arrayList = new ArrayList<>();
-                List<News> listNews = newsArrayList.getNews();
-                NewsViewModel newsModel;
-
-                for (int i = 0; i < listNews.size(); i++) {
-                    News news = new News();
-                    news.setTitle( listNews.get( i ).getTitle() );
-                    news.setImageurl( listNews.get( i ).getImageurl() );
-                    news.setPublish( listNews.get( i ).getPublish() );
-                    news.setContent( listNews.get( i ).getContent() );
-                    news.setAuthor( listNews.get( i ).getAuthor() );
-
-                    newsModel = new NewsViewModel( news );
-                    arrayList.add( newsModel );
-                }
-                arrayListMutableLiveData.setValue( arrayList );
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        } );
-        return arrayListMutableLiveData;
+        return newsLiveDataList;
     }
 
 }
