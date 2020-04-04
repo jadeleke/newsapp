@@ -1,13 +1,17 @@
 package com.axionteq.newsapp.model;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONObject;
+
 public class News {
 
-//    @SerializedName("source")
-//    @Expose
-//    private String source;
+    @SerializedName("source")
+    @Expose
+    private JsonObject source;
 
     @SerializedName("author")
     @Expose
@@ -93,11 +97,11 @@ public class News {
         this.content = content;
     }
 
-//    public String getSource() {
-//        return source;
-//    }
-//
-//    public void setSource(String source) {
-//        this.source = source;
-//    }
+    public JsonObject getSource() {
+        return source;
+    }
+
+    public void setSource(JsonObject source) {
+        this.source = source;
+    }
 }

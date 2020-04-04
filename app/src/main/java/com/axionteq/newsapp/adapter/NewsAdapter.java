@@ -37,7 +37,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         News news = newsList.get(position);
 
-        holder.author.setText(news.getAuthor());
+        holder.sourceName.setText(news.getSource().get("name").getAsString());
         holder.title.setText(news.getTitle());
         holder.desc.setText(news.getDescription());
         holder.date.setText(news.getPublished());
@@ -57,7 +57,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     class NewsViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView desc, title, date, author;
+        TextView desc, title, date, sourceName;
 
         NewsViewHolder(View view) {
             super(view);
@@ -66,7 +66,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             desc = view.findViewById(R.id.tv_description);
             title = view.findViewById(R.id.tv_title);
             date = view.findViewById(R.id.tv_published);
-            author = view.findViewById(R.id.tv_author);
+            sourceName = view.findViewById(R.id.tv_source_name);
 
             view.setOnClickListener(v -> {
                 Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show();

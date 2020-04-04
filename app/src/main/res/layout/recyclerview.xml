@@ -26,6 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="start"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/colorSecondaryTextLight"/>
@@ -35,6 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="end"
             android:textSize="14sp"
             android:textColor="@color/colorSecondaryTextLight"/>
 
@@ -55,6 +57,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_title"
+        android:textStyle="bold"
+        android:textSize="14sp"
         android:textColor="@color/colorSecondaryTextDark"
         android:layout_marginTop="5dp" />
 
