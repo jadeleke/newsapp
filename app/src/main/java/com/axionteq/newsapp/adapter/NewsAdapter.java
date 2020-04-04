@@ -17,6 +17,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
     private Context context;
     private List<News> newsList;
@@ -41,7 +43,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.title.setText(news.getTitle());
         holder.desc.setText(news.getDescription());
         holder.date.setText(news.getPublished());
-        Picasso.get().load(news.getImageUrl()).into(holder.imageView);
+        Picasso.get()
+                .load(news.getImageUrl())
+                .transform(new RoundedCornersTransformation(10, 10))
+                .into(holder.imageView);
     }
 
     @Override
