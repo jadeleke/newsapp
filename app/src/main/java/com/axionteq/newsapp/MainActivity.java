@@ -26,11 +26,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
-        newsAdapter = new NewsAdapter(getApplicationContext());
+        newsAdapter = new NewsAdapter(this);
 
         newsViewModel.getNewsList().observe(this, (newsList) -> {
             newsAdapter.setNews(newsList);
-            recyclerView.setAdapter(newsAdapter);
         });
+
+        recyclerView.setAdapter(newsAdapter);
     }
 }

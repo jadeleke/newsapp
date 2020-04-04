@@ -9,9 +9,10 @@ import retrofit2.http.Query;
 
 public interface APIService {
 
-    @GET("everything/")
-    Observable<Response<ArticlesResponse>> getArticles (
-            @Query("q") String topic
+    @GET("everything")
+    Observable<Response<ArticlesResponse>> getArticles(
+            @Query("q") String topic,
+            @Query("apiKey") String apiKey
     );
 
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.axionteq.newsapp.BuildConfig;
 import com.axionteq.newsapp.model.ArticlesResponse;
 import com.axionteq.newsapp.model.News;
 import com.axionteq.newsapp.retrofit.APIService;
@@ -17,6 +18,9 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 class NewsRepository {
+
+    private static final String TAG = "NewsRepository";
+    private final String API_KEY = BuildConfig.API_KEY;
 
     private static NewsRepository instance;
     private APIService apiService;
@@ -38,20 +42,23 @@ class NewsRepository {
     LiveData<List<News>> getArticles() {
         final MutableLiveData<List<News>> newsLiveDataList = new MutableLiveData<>();
 
-        disposable.add(apiService.getArticles("bitcoin")
+        disposable.add(apiService.getArticles("bitcoin", API_KEY)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(articlesResponse -> {
+                    Log.d(TAG + " out", articlesResponse.toString());
                     if (articlesResponse.body() != null && articlesResponse.isSuccessful()) {
 
                         ArticlesResponse response = articlesResponse.body();
-                        if (response.getStatus().equals("ok"))
+                        if (response.getStatus().equals("ok")) {
                             newsLiveDataList.setValue(response.getNews());
-                        else
-                            Log.i("Err", "Unable to contact API");
+                            Log.d(TAG + " res", response.toString());
+                        } else
+                            Log.i(TAG, "Unable to contact API");
+
                     } else
-                        Log.i("Err", articlesResponse.message());
-                }, throwable -> Log.i("throwable", throwable.getLocalizedMessage()))
+                        Log.i(TAG + " err", articlesResponse.message());
+                }, throwable -> Log.i(TAG + " e", throwable.getMessage()))
         );
 
         return newsLiveDataList;

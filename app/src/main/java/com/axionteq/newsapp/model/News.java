@@ -5,6 +5,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class News {
 
+//    @SerializedName("source")
+//    @Expose
+//    private String source;
+
     @SerializedName("author")
     @Expose
     private String author;
@@ -32,10 +36,6 @@ public class News {
     @SerializedName("content")
     @Expose
     private String content;
-
-    @SerializedName("source")
-    @Expose
-    private String source;
 
     public String getAuthor() {
         return author;
@@ -93,11 +93,11 @@ public class News {
         this.content = content;
     }
 
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
+//    public String getSource() {
+//        return source;
+//    }
+//
+//    public void setSource(String source) {
+//        this.source = source;
+//    }
 }
