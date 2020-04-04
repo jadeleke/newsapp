@@ -45,7 +45,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.date.setText(news.getPublished());
         Picasso.get()
                 .load(news.getImageUrl())
-                .transform(new RoundedCornersTransformation(10, 10))
+                .transform(new RoundedCornersTransformation(20, 0))
                 .into(holder.imageView);
     }
 

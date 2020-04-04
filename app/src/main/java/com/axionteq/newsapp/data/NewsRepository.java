@@ -42,7 +42,7 @@ class NewsRepository {
     LiveData<List<News>> getArticles() {
         final MutableLiveData<List<News>> newsLiveDataList = new MutableLiveData<>();
 
-        disposable.add(apiService.getArticles("bitcoin", API_KEY)
+        disposable.add(apiService.getArticles("coronavirus", API_KEY)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(articlesResponse -> {
