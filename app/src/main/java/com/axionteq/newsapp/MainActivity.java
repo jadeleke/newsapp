@@ -3,43 +3,43 @@ package com.axionteq.newsapp;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.axionteq.newsapp.databinding.ActivityMainBinding;
-
-import org.json.JSONException;
-
-import java.util.ArrayList;
+import com.axionteq.newsapp.adapter.NewsAdapter;
+import com.axionteq.newsapp.data.NewsViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding binding;
-    NewsVM newsVM =  new NewsVM(  );
-    News news;
+    NewsViewModel newsViewModel;
     NewsAdapter newsAdapter;
-
-    public MainActivity() throws JSONException {
-    }
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        binding = DataBindingUtil.setContentView( this, R.layout.activity_main );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        binding.setMain( this );
-        binding.setLifecycleOwner( this );
-        newsVM = new ViewModelProvider( this ).get( NewsVM.class );
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(getString(R.string.app_name));
 
-        binding.recyclerView.setHasFixedSize( true );
-        binding.recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(
+                MainActivity.this,
+                DividerItemDecoration.VERTICAL
+        ));
 
-        newsVM.getArrayListMutableLiveData().observe( this, newsVMS -> {
+        newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
+        newsAdapter = new NewsAdapter(this);
 
-            newsAdapter = new NewsAdapter( MainActivity.this, newsVMS );
-            binding.recyclerView.setAdapter( newsAdapter );
-        } );
+        newsViewModel.getNewsList().observe(this, (newsList) -> {
+            newsAdapter.setNews(newsList);
+        });
+
+        recyclerView.setAdapter(newsAdapter);
     }
 }
