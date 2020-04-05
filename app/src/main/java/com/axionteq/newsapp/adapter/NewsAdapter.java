@@ -15,7 +15,12 @@ import com.axionteq.newsapp.R;
 import com.axionteq.newsapp.model.News;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.SimpleTimeZone;
 
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
@@ -38,11 +43,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         News news = newsList.get(position);
+        String publishedDate = "";
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",
+                    Locale.getDefault()).parse(news.getPublished());
+            publishedDate = new SimpleDateFormat("EE, dd MMM yy, hh:mm aaa", Locale.getDefault()).format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         holder.sourceName.setText(news.getSource().get("name").getAsString());
         holder.title.setText(news.getTitle());
         holder.desc.setText(news.getDescription());
-        holder.date.setText(news.getPublished());
+        holder.date.setText(publishedDate);
         Picasso.get()
                 .load(news.getImageUrl())
                 .transform(new RoundedCornersTransformation(20, 0))
