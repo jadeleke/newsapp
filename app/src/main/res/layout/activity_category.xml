@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorSecondaryTextLight"
+    tools:context=".category.CategoryActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_ac"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary"
+        android:foregroundGravity="center_horizontal"
+        android:gravity="center_horizontal"
+        app:buttonGravity="center_vertical"
+        app:title="Category"
+        app:titleTextColor="@color/design_default_color_background" />
+
+    <GridView
+        android:id="@+id/gv_ac"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tb_ac"
+        android:gravity="center"
+        android:horizontalSpacing="5dp"
+        android:scrollbars="none"
+        android:numColumns="2"
+        android:padding="5dp"
+        android:verticalSpacing="5dp" />
+</RelativeLayout>

@@ -1,45 +1,67 @@
 package com.axionteq.newsapp.model;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import com.axionteq.newsapp.MainActivity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.json.JSONObject;
-
+@Entity(tableName = "news")
 public class News {
 
-    @SerializedName("source")
+/*    @SerializedName("source")
     @Expose
-    private JsonObject source;
+    private JsonObject source;*/
+
+    @NonNull
+    @Expose
+    @PrimaryKey
+    @SerializedName("category")
+    @ColumnInfo(name = "category")
+    private String category = MainActivity.locals.getCategory();
 
     @SerializedName("author")
+    @ColumnInfo(name="author")
     @Expose
     private String author;
 
     @SerializedName("title")
+    @ColumnInfo(name="title")
     @Expose
     private String title;
 
     @SerializedName("description")
+    @ColumnInfo(name="description")
     @Expose
     private String description;
 
     @SerializedName("url")
+    @ColumnInfo(name="url")
     @Expose
     private String url;
 
     @SerializedName("urlToImage")
+    @ColumnInfo(name="urlToImage")
     @Expose
     private String imageUrl;
 
     @SerializedName("publishedAt")
+    @ColumnInfo(name="publishedAt")
     @Expose
     private String published;
 
     @SerializedName("content")
+    @ColumnInfo(name = "content")
     @Expose
     private String content;
+
+    @Expose
+    @Embedded
+    private Source source;
 
     public String getAuthor() {
         return author;
@@ -97,11 +119,29 @@ public class News {
         this.content = content;
     }
 
+    public Source getSource() {
+        return source;
+    }
+
+    public void setSource(Source source) {
+        this.source = source;
+    }
+
+    @NonNull
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(@NonNull String category) {
+        this.category = category;
+    }
+
+    /*
     public JsonObject getSource() {
         return source;
     }
 
     public void setSource(JsonObject source) {
         this.source = source;
-    }
+    }*/
 }

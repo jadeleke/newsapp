@@ -1,10 +1,16 @@
 package com.axionteq.newsapp.model;
 
+import androidx.room.Entity;
+import androidx.room.TypeConverters;
+
+import com.axionteq.newsapp.utils.NewsTypeConverters;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@TypeConverters(NewsTypeConverters.class)
+@Entity()
 public class ArticlesResponse {
 
     @SerializedName("status")

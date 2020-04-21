@@ -3,13 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/colorSecondaryTextLight"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/tb"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"/>
+        android:layout_height="match_parent"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"/>
 </RelativeLayout>

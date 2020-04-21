@@ -1,10 +1,13 @@
 package com.axionteq.newsapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.axionteq.newsapp.R;
+import com.axionteq.newsapp.detail.DetailActivity;
 import com.axionteq.newsapp.model.News;
 import com.squareup.picasso.Picasso;
 
@@ -52,7 +56,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             e.printStackTrace();
         }
 
-        holder.sourceName.setText(news.getSource().get("name").getAsString());
+        holder.sourceName.setText(news.getSource().getName());
         holder.title.setText(news.getTitle());
         holder.desc.setText(news.getDescription());
         holder.date.setText(publishedDate);
@@ -60,6 +64,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                 .load(news.getImageUrl())
                 .transform(new RoundedCornersTransformation(20, 0))
                 .into(holder.imageView);
+
+        holder.linearLayout.setOnClickListener( v -> {
+            Intent intent = new Intent( context, DetailActivity.class );
+            intent.putExtra( "title", news.getTitle() );
+            intent.putExtra( "url", news.getUrl() );
+            intent.putExtra( "techname", news.getSource().getName() );
+            context.startActivity( intent );
+        } );
     }
 
     @Override
@@ -76,6 +88,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         ImageView imageView;
         TextView desc, title, date, sourceName;
+        LinearLayout linearLayout;
 
         NewsViewHolder(View view) {
             super(view);
@@ -85,6 +98,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             title = view.findViewById(R.id.tv_title);
             date = view.findViewById(R.id.tv_published);
             sourceName = view.findViewById(R.id.tv_source_name);
+            linearLayout = view.findViewById( R.id.ll_rv );
 
             view.setOnClickListener(v -> {
                 Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show();
