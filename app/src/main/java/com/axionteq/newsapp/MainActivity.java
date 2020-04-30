@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.axionteq.newsapp.adapter.NewsAdapter;
+import com.axionteq.newsapp.data.NewsRepository;
 import com.axionteq.newsapp.data.NewsViewModel;
 import com.axionteq.newsapp.db.AppDatabase;
 import com.axionteq.newsapp.utils.Locals;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
         toolbar = findViewById( R.id.tb );
-        Stetho.initializeWithDefaults(this);
+        Stetho.initializeWithDefaults( this );
 
         setSupportActionBar( toolbar );
         if (getSupportActionBar() != null)
@@ -65,5 +66,11 @@ public class MainActivity extends AppCompatActivity {
         } );
 
         recyclerView.setAdapter( newsAdapter );
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        NewsRepository.getInstance().safelyDisposable();
     }
 }

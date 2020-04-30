@@ -12,15 +12,17 @@ import com.axionteq.newsapp.model.ArticlesResponse;
 import com.axionteq.newsapp.model.News;
 import com.axionteq.newsapp.retrofit.APIService;
 import com.axionteq.newsapp.retrofit.RetrofitClient;
+import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-class NewsRepository {
+public class NewsRepository {
 
     private static final String TAG = "NewsRepository";
     private final String API_KEY = BuildConfig.API_KEY;
@@ -28,16 +30,16 @@ class NewsRepository {
 
     private static NewsRepository instance;
     private APIService apiService;
-    private CompositeDisposable disposable;
-
+    private CompositeDisposable compositeDisposable;
+    Disposable disposable;
 
     private NewsRepository() {
         apiService = RetrofitClient.getApiService();
-        disposable = new CompositeDisposable();
+        compositeDisposable = new CompositeDisposable();
     }
 
     // Singleton
-    static NewsRepository getInstance() {
+    public static NewsRepository getInstance() {
         if (instance == null)
             instance = new NewsRepository();
 
@@ -51,8 +53,13 @@ class NewsRepository {
         List<News> newsList = new ArrayList<>();
 
         News news = null;
+        disposable = ReactiveNetwork.observeInternetConnectivity()
+                .subscribeOn( Schedulers.io() )
+                .observeOn( AndroidSchedulers.mainThread() )
+                .subscribe( connectivity -> {
+                            if (connectivity = true) {
 
-        disposable.add( apiService.getArticles( topic, API_KEY )
+        compositeDisposable.add( apiService.getArticles( topic, API_KEY )
                         .observeOn( AndroidSchedulers.mainThread() )
                         .subscribeOn( Schedulers.io() )
                         .subscribe( articlesResponse -> {
@@ -76,7 +83,9 @@ class NewsRepository {
                                 Log.i( TAG + " err", articlesResponse.message() );
                         }, throwable -> Log.i( TAG + " e", throwable.getMessage() ) )
         );
-
+                          }
+                        }
+                );
         return newsLiveDataList;
     }
 
@@ -86,4 +95,14 @@ class NewsRepository {
         MainActivity.appDatabase.userDao().insertAll( newsList );
     }
 
+        public void safelyDisposable(){
+        safelyDispose( disposable );
+    }
+
+    private void safelyDispose(Disposable disposable){
+        if (disposable!=null && !disposable.isDisposed()){
+            disposable.dispose();
+        }
+
+    }
 }

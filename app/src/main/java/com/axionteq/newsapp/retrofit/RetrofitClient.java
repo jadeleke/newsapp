@@ -4,6 +4,8 @@ import com.axionteq.newsapp.BuildConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -19,6 +21,8 @@ public class RetrofitClient {
             .create();
 
     private static OkHttpClient client = new OkHttpClient().newBuilder()
+            .connectTimeout( 300, TimeUnit.SECONDS )
+            .readTimeout( 300, TimeUnit.SECONDS )
             .addNetworkInterceptor(new CustomInterceptor())
             .addInterceptor(new HttpLoggingInterceptor())
             .build();
