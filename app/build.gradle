@@ -89,6 +89,16 @@ dependencies {
     //db testing
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
 
+    //android test
+    testImplementation 'androidx.test:core:'  + rootProject.coreVersion
+    androidTestImplementation 'androidx.test:runner:' + rootProject.runnerVersion
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:'  + rootProject.espressoVersion
+    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:rules:' + rootProject.rulesVersion
+    androidTestImplementation 'androidx.test.espresso:espresso-web:3.2.0'
+
     //network detection
     implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.8'
 }

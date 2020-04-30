@@ -21,11 +21,14 @@ import com.axionteq.newsapp.R;
 public class DetailActivity extends AppCompatActivity implements WebView.FindListener {
 
     Toolbar toolbar;
-    String strTitle, strUrl, strTechName;
+    String strTitle, strTechName;
     WebView webView;
     ProgressBar progressBar;
     TextView tvTech, tvTitle;
     ImageView imageView;
+
+    public static String strUrl="https://web.whatsapp.com";
+    public static String key_url="web";
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -34,7 +37,6 @@ public class DetailActivity extends AppCompatActivity implements WebView.FindLis
         setContentView( R.layout.activity_detail );
         webView = findViewById( R.id.wv );
         progressBar = findViewById( R.id.pb );
-//        Toolbar toolbar = findViewById( R.id.tb_ad );
 
         tvTitle = findViewById( R.id.tv_title_ad );
         tvTech = findViewById( R.id.tv_name_ad );

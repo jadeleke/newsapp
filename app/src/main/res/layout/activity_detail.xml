@@ -1,83 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".detail.DetailActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
+        android:id="@+id/tb_ad"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/tb_ad"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            android:layout_height="match_parent"
+            android:padding="5dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorPrimary">
+            <ImageView
+                android:id="@+id/iv_tb_ad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:onClick="ImageView"
+                android:layout_margin="10dp"
+                android:background="@drawable/ic_close_white_24dp"
+                tools:ignore="OnClick" />
 
-                <ImageView
-                    android:id="@+id/iv_tb_ad"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/todo"
-                    android:focusableInTouchMode="true"
-                    android:onClick="ImageView"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_close_white_24dp"
-                    tools:ignore="OnClick" />
+            <TextView
+                android:id="@+id/tv_title_ad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/iv_tb_ad"
+                android:text="Title"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tv_title_ad"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_toEndOf="@id/iv_tb_ad"
-                    android:maxLines="1"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_name_ad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title_ad"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/iv_tb_ad"
+                android:text="tech name"
+                android:textColor="@color/colorWhite"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_name_ad"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_title_ad"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_toEndOf="@id/iv_tb_ad"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="12sp" />
-
-                <ProgressBar
-                    android:id="@+id/pb"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:layout_alignParentBottom="true"
-                    android:baselineAligned="false"
-                    android:max="100" />
-            </RelativeLayout>
-
-        </LinearLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+    <ProgressBar
+        android:id="@+id/pb"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@id/tb_ad"
+        android:baselineAligned="false"
+        android:max="100" />
 
     <WebView
         android:id="@+id/wv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:nestedScrollingEnabled="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_below="@id/pb" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

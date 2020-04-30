@@ -8,7 +8,7 @@ buildscript {
         
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.2'
+        classpath 'com.android.tools.build:gradle:3.6.3'
         
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -30,6 +30,11 @@ properties.load(new File(rootDir.absolutePath + "/local.properties").newDataInpu
 ext {
     base_url = properties.getProperty("app.base_url")
     api_key = properties.getProperty("app.api_key")
+
+    coreVersion = "1.3.0-beta01"
+    runnerVersion = "1.3.0-beta01"
+    espressoVersion = "3.3.0-beta01"
+    rulesVersion = "1.3.0-beta01"
 }
 
 task clean(type: Delete) {

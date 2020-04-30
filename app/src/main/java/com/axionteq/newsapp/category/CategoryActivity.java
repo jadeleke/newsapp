@@ -3,6 +3,7 @@ package com.axionteq.newsapp.category;
 import android.os.Bundle;
 import android.widget.GridView;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.axionteq.newsapp.R;
@@ -14,6 +15,9 @@ public class CategoryActivity extends AppCompatActivity {
     GridView gridView;
     CategoryAdapter categoryAdapter;
     ArrayList<Category> categoryArrayList = new ArrayList<>();
+
+    @VisibleForTesting
+    public static final String ROW_TEXT="8";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
