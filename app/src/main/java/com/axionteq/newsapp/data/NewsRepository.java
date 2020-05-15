@@ -31,7 +31,7 @@ public class NewsRepository {
     private static NewsRepository instance;
     private APIService apiService;
     private CompositeDisposable compositeDisposable;
-    Disposable disposable;
+    private Disposable disposable;
 
     private NewsRepository() {
         apiService = RetrofitClient.getApiService();
@@ -55,52 +55,50 @@ public class NewsRepository {
         News news = null;
         disposable = ReactiveNetwork.observeInternetConnectivity()
                 .subscribeOn( Schedulers.io() )
-                .observeOn( AndroidSchedulers.mainThread() )
+                .observeOn( Schedulers.newThread() )
                 .subscribe( connectivity -> {
-                            if (connectivity = true) {
+                            if (connectivity) {
 
-        compositeDisposable.add( apiService.getArticles( topic, API_KEY )
-                        .observeOn( AndroidSchedulers.mainThread() )
-                        .subscribeOn( Schedulers.io() )
-                        .subscribe( articlesResponse -> {
-                            Log.d( TAG + " out", articlesResponse.toString() );
-                            if (articlesResponse.body() != null && articlesResponse.isSuccessful()) {
+                                compositeDisposable.add( apiService.getArticles( topic, API_KEY )
+                                        .observeOn( AndroidSchedulers.mainThread() )
+                                        .subscribeOn( Schedulers.io() )
+                                        .subscribe( articlesResponse -> {
+                                            Log.d( TAG + " out", articlesResponse.toString() );
+                                            if (articlesResponse.body() != null && articlesResponse.isSuccessful()) {
 
-                                ArticlesResponse response = articlesResponse.body();
-                                if (response.getStatus().equals( "ok" )) {
+                                                ArticlesResponse response = articlesResponse.body();
+                                                if (response.getStatus().equals( "ok" )) {
 
-                                    newsLiveDataList.setValue( MainActivity.appDatabase.userDao().getAllCategoryBased());
+                                                    newsLiveDataList.setValue( MainActivity.appDatabase.userDao().getAllCategoryBased() );
+                                                    InsertAll( newsList );
 
-                                    newsLiveDataList.setValue( response.getNews() );
-                                    newsList.addAll( response.getNews() );
+                                                    newsLiveDataList.setValue( response.getNews() );
+                                                    newsList.addAll( response.getNews() );
 
-                                    Insert(newsList);
-                                    Log.d( TAG + " res", response.toString() );
-                                } else
-                                    Log.i( TAG, "Unable to contact API" );
+                                                    Log.d( TAG + " res", response.toString() );
+                                                } else
+                                                    Log.i( TAG, "Unable to contact API" );
 
-                            } else
-                                Log.i( TAG + " err", articlesResponse.message() );
-                        }, throwable -> Log.i( TAG + " e", throwable.getMessage() ) )
-        );
-                          }
+                                            } else
+                                                Log.i( TAG + " err", articlesResponse.message() );
+                                        }, throwable -> Log.i( TAG + " e", throwable.getMessage() ) )
+                                );
+                            }
                         }
                 );
         return newsLiveDataList;
     }
 
-    private void Insert(List<News> newsList) {
-
-        MainActivity.appDatabase.userDao().deleteAll();
-        MainActivity.appDatabase.userDao().insertAll( newsList );
+    private void InsertAll(List<News> news) {
+        MainActivity.appDatabase.userDao().insertAllNews( news );
     }
 
-        public void safelyDisposable(){
+    public void safelyDisposable() {
         safelyDispose( disposable );
     }
 
-    private void safelyDispose(Disposable disposable){
-        if (disposable!=null && !disposable.isDisposed()){
+    private void safelyDispose(Disposable disposable) {
+        if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }
 

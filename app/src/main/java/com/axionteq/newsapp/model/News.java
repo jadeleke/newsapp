@@ -13,15 +13,11 @@ import com.google.gson.annotations.SerializedName;
 @Entity(tableName = "news")
 public class News {
 
-/*    @SerializedName("source")
-    @Expose
-    private JsonObject source;*/
-
-    @NonNull
     @Expose
     @PrimaryKey
-    @SerializedName("category")
     @ColumnInfo(name = "category")
+    @SerializedName("category")
+    @NonNull
     private String category = MainActivity.locals.getCategory();
 
     @SerializedName("author")
@@ -135,13 +131,4 @@ public class News {
     public void setCategory(@NonNull String category) {
         this.category = category;
     }
-
-    /*
-    public JsonObject getSource() {
-        return source;
-    }
-
-    public void setSource(JsonObject source) {
-        this.source = source;
-    }*/
 }

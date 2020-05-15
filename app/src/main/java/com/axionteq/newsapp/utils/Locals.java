@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 
 public class Locals {
 
-    private String Category="Technology";
     private SharedPreferences sharedPreferences;
 
     public Locals(Context context) {
@@ -15,8 +14,7 @@ public class Locals {
     }
 
     public String getCategory() {
-//        return sharedPreferences.getString( "category", null );
-        return Category;
+        return sharedPreferences.getString( "category", null );
     }
 
     public void setCategory(String category) {

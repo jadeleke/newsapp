@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.axionteq.newsapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -12,17 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".category.CategoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".detail.DetailActivity"
             android:parentActivityName=".MainActivity"/>
-<!--        <activity android:name=".MainActivity"-->
-<!--            android:parentActivityName=".category.CategoryActivity"/>-->
+
+        <activity android:name=".MainActivity"
+            android:parentActivityName=".category.CategoryActivity"/>
     </application>
 
 </manifest>

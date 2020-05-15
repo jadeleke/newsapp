@@ -21,14 +21,16 @@ import com.axionteq.newsapp.R;
 public class DetailActivity extends AppCompatActivity implements WebView.FindListener {
 
     Toolbar toolbar;
-    String strTitle, strTechName;
+    String strTitle, strTechName,strUrl;
     WebView webView;
-    ProgressBar progressBar;
     TextView tvTech, tvTitle;
     ImageView imageView;
 
-    public static String strUrl="https://web.whatsapp.com";
+    //testing-purpose
+    public static String strurl="https://web.whatsapp.com";
     public static String key_url="web";
+
+    ProgressBar progressBar;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -37,7 +39,6 @@ public class DetailActivity extends AppCompatActivity implements WebView.FindLis
         setContentView( R.layout.activity_detail );
         webView = findViewById( R.id.wv );
         progressBar = findViewById( R.id.pb );
-
         tvTitle = findViewById( R.id.tv_title_ad );
         tvTech = findViewById( R.id.tv_name_ad );
         imageView = findViewById( R.id.iv_tb_ad );
@@ -49,8 +50,6 @@ public class DetailActivity extends AppCompatActivity implements WebView.FindLis
         tvTech.setText( strTechName );
         tvTitle.setText( strTitle );
 
-        progressBar.setVisibility( View.VISIBLE );
-
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled( true );
         webView.loadUrl( strUrl );
@@ -60,7 +59,6 @@ public class DetailActivity extends AppCompatActivity implements WebView.FindLis
 
     @Override
     public void onFindResultReceived(int i, int i1, boolean b) {
-        progressBar.setVisibility( View.GONE );
     }
 
     public void ImageView(View view) {
@@ -76,6 +74,7 @@ public class DetailActivity extends AppCompatActivity implements WebView.FindLis
         @Override
         protected Void doInBackground(Void... voids) {
             while (progressCount<100) {
+
                 progressCount++;
                 publishProgress( progressCount );
                 SystemClock.sleep( 20 );
@@ -93,6 +92,7 @@ public class DetailActivity extends AppCompatActivity implements WebView.FindLis
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate( values );
+            progressBar.setVisibility( View.VISIBLE );
             progressBar.setProgress( values[0] );
         }
 

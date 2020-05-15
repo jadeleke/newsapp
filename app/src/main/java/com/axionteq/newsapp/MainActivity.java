@@ -15,11 +15,14 @@ import com.axionteq.newsapp.adapter.NewsAdapter;
 import com.axionteq.newsapp.data.NewsRepository;
 import com.axionteq.newsapp.data.NewsViewModel;
 import com.axionteq.newsapp.db.AppDatabase;
+import com.axionteq.newsapp.model.News;
 import com.axionteq.newsapp.utils.Locals;
 import com.facebook.stetho.Stetho;
 
+import java.util.List;
 import java.util.Objects;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class MainActivity extends AppCompatActivity {
 
     NewsViewModel newsViewModel;
@@ -35,22 +38,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
         toolbar = findViewById( R.id.tb );
-        Stetho.initializeWithDefaults( this );
+        recyclerView = findViewById( R.id.recyclerView );
+
+        locals = new Locals( this );
+        locals.getCategory();
 
         setSupportActionBar( toolbar );
         if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle( getString( R.string.app_name ) );
+            getSupportActionBar().setTitle( locals.getCategory() );
         Objects.requireNonNull( getSupportActionBar() ).setDisplayShowHomeEnabled( true );
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
         getSupportActionBar().setHomeAsUpIndicator( R.drawable.ic_arrow_back_black_24dp );
 
-        locals = new Locals( this );
-        locals.getCategory();
         appDatabase = Room.databaseBuilder( this,
                 AppDatabase.class, "news_db" ).allowMainThreadQueries()
                 .build();
 
-        recyclerView = findViewById( R.id.recyclerView );
         recyclerView.setHasFixedSize( true );
         recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
         recyclerView.addItemDecoration( new DividerItemDecoration(
@@ -61,10 +64,7 @@ public class MainActivity extends AppCompatActivity {
         newsViewModel = new ViewModelProvider( this ).get( NewsViewModel.class );
         newsAdapter = new NewsAdapter( this );
 
-        newsViewModel.getNewsList().observe( this, (newsList) -> {
-            newsAdapter.setNews( newsList );
-        } );
-
+        newsViewModel.getNewsList().observe( this, (List<News> newsList) -> newsAdapter.setNews( newsList ) );
         recyclerView.setAdapter( newsAdapter );
     }
 
@@ -73,4 +73,5 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         NewsRepository.getInstance().safelyDisposable();
     }
+
 }
