@@ -1,57 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".detail.DetailActivity">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_ad"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@color/colorPrimary"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp">
-
-            <ImageView
-                android:id="@+id/iv_tb_ad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:onClick="ImageView"
-                android:layout_margin="10dp"
-                android:background="@drawable/ic_close_white_24dp"
-                tools:ignore="OnClick" />
-
-            <TextView
-                android:id="@+id/tv_title_ad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@id/iv_tb_ad"
-                android:text="Title"
-                android:lines="1"
-                android:textColor="@color/colorWhite"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tv_name_ad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_title_ad"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@id/iv_tb_ad"
-                android:text="tech name"
-                android:textColor="@color/colorWhite"
-                android:textSize="12sp" />
-        </RelativeLayout>
-    </LinearLayout>
+        android:elevation="2dp"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:subtitleTextAppearance="@style/ToolbarSubtitle"
+        app:subtitleTextColor="@color/colorWhite"
+        app:titleTextAppearance="@style/ToolbarTitle"
+        app:titleTextColor="@color/colorWhite" />
 
     <ProgressBar
         android:id="@+id/pb"
@@ -66,6 +31,7 @@
         android:id="@+id/wv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/pb" />
+        android:layout_below="@id/tb_ad"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

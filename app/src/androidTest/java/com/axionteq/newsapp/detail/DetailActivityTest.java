@@ -46,7 +46,7 @@ public class DetailActivityTest {
     }
 
     @Test
-    public void webViewTest() throws ExceptionInInitializerError {
+    public void webViewTest() throws ExceptionInInitializerError {1
         ActivityScenario<DetailActivity> activityActivityScenario = rule.getScenario();
 
         onWebView( ViewMatchers.withId( R.id.wv ) ).forceJavascriptEnabled();

@@ -1,7 +1,6 @@
 package com.axionteq.newsapp.detail;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -15,20 +14,19 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.axionteq.newsapp.MainActivity;
 import com.axionteq.newsapp.R;
 
 public class DetailActivity extends AppCompatActivity implements WebView.FindListener {
 
     Toolbar toolbar;
-    String strTitle, strTechName,strUrl;
+    String strTitle, strTechName, strUrl;
     WebView webView;
     TextView tvTech, tvTitle;
     ImageView imageView;
 
     //testing-purpose
-    public static String strurl="https://web.whatsapp.com";
-    public static String key_url="web";
+    public static String strurl = "https://web.whatsapp.com";
+    public static String key_url = "web";
 
     ProgressBar progressBar;
 
@@ -39,16 +37,20 @@ public class DetailActivity extends AppCompatActivity implements WebView.FindLis
         setContentView( R.layout.activity_detail );
         webView = findViewById( R.id.wv );
         progressBar = findViewById( R.id.pb );
-        tvTitle = findViewById( R.id.tv_title_ad );
-        tvTech = findViewById( R.id.tv_name_ad );
-        imageView = findViewById( R.id.iv_tb_ad );
+        toolbar = findViewById( R.id.tb_ad );
 
         strTitle = getIntent().getStringExtra( "title" );
         strUrl = getIntent().getStringExtra( "url" );
         strTechName = getIntent().getStringExtra( "techname" );
 
-        tvTech.setText( strTechName );
-        tvTitle.setText( strTitle );
+        setSupportActionBar( toolbar );
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+            getSupportActionBar().setDisplayShowHomeEnabled( true );
+            getSupportActionBar().setHomeAsUpIndicator( R.drawable.ic_close_white_24dp );
+            getSupportActionBar().setTitle( strTitle );
+            getSupportActionBar().setSubtitle( strTechName );
+        }
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled( true );
@@ -61,11 +63,6 @@ public class DetailActivity extends AppCompatActivity implements WebView.FindLis
     public void onFindResultReceived(int i, int i1, boolean b) {
     }
 
-    public void ImageView(View view) {
-        Intent intent = new Intent(this, MainActivity.class );
-        startActivity( intent );
-    }
-
     @SuppressLint("StaticFieldLeak")
     public class ProgressTask extends AsyncTask<Void, Integer, Void> {
         int progressCount;
@@ -73,7 +70,7 @@ public class DetailActivity extends AppCompatActivity implements WebView.FindLis
         @SuppressLint("WrongThread")
         @Override
         protected Void doInBackground(Void... voids) {
-            while (progressCount<100) {
+            while (progressCount < 100) {
 
                 progressCount++;
                 publishProgress( progressCount );
