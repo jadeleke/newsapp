@@ -8,6 +8,7 @@
     <color name="colorSecondaryTextLight">#BDBDBD</color>
     <color name="colorSecondaryTextDark">#757575</color>
     <color name="colorWhite">#FFFF</color>
+    <color name="colorTransparent">#00FFFFFF</color>
 
     <!--    category-->
     <color name="colorCategory1">#2196F3</color>

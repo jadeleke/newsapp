@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,19 +20,21 @@ import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.SimpleTimeZone;
 
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
     private Context context;
     private List<News> newsList;
+    private ArrayList<News> newsArrayList;
 
     public NewsAdapter(Context context) {
         this.context = context;
+        this.newsArrayList = new ArrayList<>();
     }
 
     @NonNull
@@ -51,6 +52,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",
                     Locale.getDefault()).parse(news.getPublished());
+            assert date != null;
             publishedDate = new SimpleDateFormat("EE, dd MMM yy, hh:mm aaa", Locale.getDefault()).format(date);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -74,6 +76,21 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         } );
     }
 
+    public void filter(String filter){
+        filter = filter.toLowerCase(Locale.getDefault());
+        newsList.clear();
+        if (filter.length() == 0){
+            newsArrayList.addAll( newsList );
+        }else {
+            for (News news:newsList){
+                if ( news.getTitle().toLowerCase(Locale.getDefault()).contains(filter)){
+                    newsList.add( news );
+                }
+            }
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
     public int getItemCount() {
         return newsList != null ? newsList.size() : 0;
@@ -81,6 +98,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     public void setNews(List<News> news) {
         this.newsList = news;
+        newsArrayList.addAll( news );
         notifyDataSetChanged();
     }
 
@@ -99,10 +117,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             date = view.findViewById(R.id.tv_published);
             sourceName = view.findViewById(R.id.tv_source_name);
             linearLayout = view.findViewById( R.id.ll_rv );
-
-            view.setOnClickListener(v -> {
-                Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show();
-            });
         }
     }
 }
